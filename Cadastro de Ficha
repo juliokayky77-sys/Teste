@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>PassManager Pro | Controle de Intervalo</title>
-    <!-- Font Awesome 6 (Free Icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -20,7 +19,6 @@
             min-height: 100vh;
         }
 
-        /* Modern glassmorphism card style */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -32,7 +30,6 @@
             transition: all 0.2s;
         }
 
-        /* header modern */
         .hero-header {
             background: linear-gradient(120deg, #1e2a3a, #0f172a);
             padding: 28px 32px;
@@ -64,12 +61,11 @@
             font-size: 0.9rem;
         }
 
-        /* main content padding */
         .main-content {
             padding: 32px;
         }
 
-        /* cards style */
+     
         .card-modern {
             background: white;
             border-radius: 1.5rem;
@@ -138,7 +134,6 @@
             box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
         }
 
-        /* button group */
         .btn-group {
             display: flex;
             flex-wrap: wrap;
@@ -193,7 +188,6 @@
         }
         .btn-outline:hover { background: #f8fafc; border-color: #3b82f6; }
 
-        /* modern table */
         .table-wrapper {
             overflow-x: auto;
             border-radius: 20px;
@@ -249,7 +243,6 @@
             font-weight: 600;
         }
 
-        /* ficha (pass) card premium */
         .ficha-premium {
             background: linear-gradient(135deg, #ffffff 0%, #fef9e6 100%);
             border-radius: 32px;
@@ -312,8 +305,6 @@
             padding: 20px;
             margin-top: 24px;
         }
-
-        /* notification */
         .toast-notify {
             position: fixed;
             bottom: 30px;
@@ -391,7 +382,6 @@
             </form>
         </div>
 
-        <!-- Lista de alunos com busca e melhorias -->
         <div class="card-modern">
             <div class="section-title">
                 <i class="fas fa-list-ul"></i> Registro Acadêmico
@@ -409,7 +399,6 @@
             </div>
         </div>
 
-        <!-- Área da Ficha (Pass) -->
         <div id="fichaContainer" style="display: none;">
             <div class="ficha-premium" id="passPreview">
                 <div class="ficha-header-premium">
@@ -456,11 +445,14 @@
 <div id="globalToast" class="toast-notify"><i class="fas fa-bell"></i> <span id="toastMsg">Mensagem</span></div>
 
 <script>
+
     // ======================== Gerenciamento de dados ======================
+
+
+
     let alunos = JSON.parse(localStorage.getItem('alunos_profissional')) || [];
     let alunoAtual = null;
 
-    // helpers
     function formatarCPF(cpf) {
         let cleaned = cpf.replace(/\D/g, '');
         if(cleaned.length <= 11) {
@@ -497,7 +489,6 @@
         document.getElementById('studentForm').reset();
     }
 
-    // validação e adicionar
     function adicionarAluno(event) {
         event.preventDefault();
         const nome = document.getElementById('nome').value.trim();
@@ -557,7 +548,6 @@
         alunoAtual = null;
     }
 
-    // ENVIO DE EMAIL SIMULADO (profissional com log e relatório)
     function enviarEmailProfissional() {
         if(!alunoAtual) {
             showToast("Nenhuma ficha ativa. Gere um passe primeiro.", "error");
@@ -570,7 +560,7 @@
         }
         const codigo = document.getElementById('codigoVerificacao').innerText;
         const dataEmissao = document.getElementById('fichaData').innerText;
-        // simulação profissional com log detalhado
+    
         console.group("📧 ENVIO DE PASS - SIMULAÇÃO AVANÇADA");
         console.log(`✅ Destino: ${emailDestino}`);
         console.log(`📄 Assunto: Passagem de Intervalo - ${alunoAtual.nome}`);
@@ -580,19 +570,17 @@
         console.log(`📎 Anexo simbólico: pass_${alunoAtual.matricula}.pdf (modo demo)`);
         console.groupEnd();
         showToast(`📨 Simulação: Passagem enviada para ${emailDestino} (demo, ver console)`, "success");
-        // Extra: botão inteligente: podemos adicionar um relatório
         gerarLogEnvio(emailDestino, alunoAtual, codigo);
     }
 
     function gerarLogEnvio(email, aluno, codigo) {
-        // apenas para feedback extra
         const logArea = document.createElement('div');
         logArea.style.display = 'none';
         document.body.appendChild(logArea);
-        // não necessário, mas profissional
+     
     }
 
-    // atualizar lista com busca dinâmica
+  
     function atualizarListaAlunos(busca = "") {
         const tbody = document.getElementById('studentsList');
         const searchTerm = busca.toLowerCase();
@@ -631,7 +619,7 @@
         });
     }
 
-    // carregar dados demo com botão extra
+    
     function carregarExemplos() {
         if(alunos.length > 0 && confirm("Já existem alunos. Deseja adicionar exemplos mesmo assim? (não duplicará matrículas)")) {
             const exemplos = [
@@ -657,7 +645,7 @@
         }
     }
 
-    // eventos e busca
+   
     document.getElementById('studentForm').addEventListener('submit', adicionarAluno);
     document.getElementById('importDemoBtn').addEventListener('click', carregarExemplos);
     document.getElementById('btnSendEmail')?.addEventListener('click', enviarEmailProfissional);
@@ -674,19 +662,19 @@
         e.target.value = formatted;
     });
 
-    // inicialização segura
+  
     document.addEventListener('DOMContentLoaded', () => {
         atualizarListaAlunos();
         atualizarContador();
         if(alunos.length === 0) {
-            // apenas para demonstração
+     
             alunos = [
                 {id: 1, nome: "Isabela Rocha", cpf: "123.456.789-01", matricula: "2023111", curso: "Ciências", serie: "9° Ano", email: "isabela@escola.com"},
                 {id: 2, nome: "Thiago Mendes", cpf: "987.654.321-02", matricula: "2023222", curso: "Matemática", serie: "3° Ano", email: "thiago@escola.com"}
             ];
             salvarAlunos();
         }
-        // garantir que o botão de email existe
+      
         const btnSend = document.getElementById('btnSendEmail');
         if(btnSend) btnSend.onclick = enviarEmailProfissional;
     });
